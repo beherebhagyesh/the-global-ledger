@@ -546,61 +546,61 @@ export type StartupSector = 'AI_INFRA' | 'FINTECH' | 'BIOTECH' | 'CONSUMER' | 'W
 export type FounderArchetype = 'VISIONARY' | 'HACKER' | 'HUSTLER' | 'ACADEMIC' | 'FRAUDSTER';
 
 export interface FounderProfile {
-    name: string;
-    role: string;
-    archetype: FounderArchetype;
-    skill: number; // 0-100
-    integrity: number; // 0-100 (Hidden stat revealed by DD)
-    pitchStyle: string;
+  name: string;
+  role: string;
+  archetype: FounderArchetype;
+  skill: number; // 0-100
+  integrity: number; // 0-100 (Hidden stat revealed by DD)
+  pitchStyle: string;
 }
 
 export interface StartupOpportunity {
-    id: string;
-    name: string;
-    pitch: string;
-    
-    // Geography & Sector
-    region: StartupRegion;
-    sector: StartupSector;
-    
-    // Deal Terms
-    valuation: number;
-    ask: number; // Min ticket
-    equityOffered: number; // %
-    
-    // Hidden Stats (Revealed by Due Diligence)
-    burnRate: number; // $/mo
-    runwayMonths: number;
-    traction: number; // MRR or Users
-    redFlags: string[]; // e.g., "Pending Lawsuit"
-    greenFlags: string[]; // e.g., "Ex-Google Team"
-    
-    // People
-    founder: FounderProfile;
-    
-    // Status
-    status: 'OPEN' | 'FUNDED' | 'PASSED' | 'EXITED' | 'BANKRUPT' | 'DILUTED';
-    investedAmount?: number;
-    currentValuation?: number; // For tracking portfolio growth
-    round: 'PRE_SEED' | 'SEED' | 'SERIES_A' | 'SERIES_B';
-    
-    // Additional fields for gameplay
-    mentorLevel?: number;
-    potentialX?: number; // Potential multiplier for exit
+  id: string;
+  name: string;
+  pitch: string;
+
+  // Geography & Sector
+  region: StartupRegion;
+  sector: StartupSector;
+
+  // Deal Terms
+  valuation: number;
+  ask: number; // Min ticket
+  equityOffered: number; // %
+
+  // Hidden Stats (Revealed by Due Diligence)
+  burnRate: number; // $/mo
+  runwayMonths: number;
+  traction: number; // MRR or Users
+  redFlags: string[]; // e.g., "Pending Lawsuit"
+  greenFlags: string[]; // e.g., "Ex-Google Team"
+
+  // People
+  founder: FounderProfile;
+
+  // Status
+  status: 'OPEN' | 'FUNDED' | 'PASSED' | 'EXITED' | 'BANKRUPT' | 'DILUTED';
+  investedAmount?: number;
+  currentValuation?: number; // For tracking portfolio growth
+  round: 'PRE_SEED' | 'SEED' | 'SERIES_A' | 'SERIES_B';
+
+  // Additional fields for gameplay
+  mentorLevel?: number;
+  potentialX?: number; // Potential multiplier for exit
 }
 
 export interface SectorTrend {
-    id: StartupSector;
-    name: string;
-    hype: number; // 0-100. Affects Valuation.
-    exitMultiple: number; // 5x - 100x potential
-    volatility: number;
+  id: StartupSector;
+  name: string;
+  hype: number; // 0-100. Affects Valuation.
+  exitMultiple: number; // 5x - 100x potential
+  volatility: number;
 }
 
 export interface RegionStats {
-    id: StartupRegion;
-    name: string;
-    valuationMod: number; // 1.0 = Standard, 0.5 = Cheap, 2.0 = Expensive
-    talentPool: number; // Affects success rate
-    riskFactor: number;
+  id: StartupRegion;
+  name: string;
+  valuationMod: number; // 1.0 = Standard, 0.5 = Cheap, 2.0 = Expensive
+  talentPool: number; // Affects success rate
+  riskFactor: number;
 }
