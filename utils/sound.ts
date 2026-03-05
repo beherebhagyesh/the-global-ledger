@@ -6,15 +6,26 @@ let audioCtx: AudioContext | null = null;
 
 type SoundType = 'SUCCESS' | 'ERROR' | 'CLICK' | 'LEVEL_UP' | 'COIN' | 'VICTORY' | 'HAMMER';
 
-export const playSound = (type: SoundType) => {
-  // Lazy initialization on first user interaction
+/**
+ * Resumes the AudioContext if it's suspended.
+ * This should be called within a user interaction handler.
+ */
+export const initAudio = async () => {
   if (!audioCtx) {
     audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
   }
-
   if (audioCtx.state === 'suspended') {
-    audioCtx.resume().catch(e => console.error(e));
+    await audioCtx.resume();
   }
+};
+
+export const playSound = async (type: SoundType) => {
+  // Lazy initialization
+  if (!audioCtx) {
+    await initAudio().catch(() => { });
+  }
+
+  if (!audioCtx || audioCtx.state === 'suspended') return;
 
   const osc = audioCtx.createOscillator();
   const gainNode = audioCtx.createGain();
@@ -73,14 +84,14 @@ export const playSound = (type: SoundType) => {
         const g = audioCtx.createGain();
         o.connect(g);
         g.connect(audioCtx.destination);
-        
+
         o.type = 'square';
         o.frequency.value = freq;
-        
+
         const startTime = now + (i * 0.1);
         g.gain.setValueAtTime(0.05, startTime);
         g.gain.exponentialRampToValueAtTime(0.001, startTime + 0.4);
-        
+
         o.start(startTime);
         o.stop(startTime + 0.4);
       });
@@ -95,17 +106,17 @@ export const playSound = (type: SoundType) => {
         const g = audioCtx.createGain();
         o.connect(g);
         g.connect(audioCtx.destination);
-        
+
         o.type = 'triangle';
         o.frequency.value = freq;
-        
+
         const startTime = now + (i * 0.15);
         // Make last note longer
         const duration = i === vNotes.length - 1 ? 1.0 : 0.3;
-        
+
         g.gain.setValueAtTime(0.08, startTime);
         g.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
-        
+
         o.start(startTime);
         o.stop(startTime + duration);
       });
